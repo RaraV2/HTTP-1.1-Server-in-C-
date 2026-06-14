@@ -1,4 +1,4 @@
-# HTTP/1.1 Server in C++
+# CPP-Multithreaded-HTTP-Server
 
 A multithreaded HTTP/1.1 server written in C++ using POSIX sockets. The implementation follows the HTTP semantics and messaging specifications defined in RFC 9110 and RFC 9112.
 
@@ -6,58 +6,112 @@ The server uses a dedicated listener thread to accept incoming connections and s
 
 ## Features
 
+### Core HTTP
+
 * HTTP/1.1 request parsing
-
-  * Request line parsing
-  * Header parsing
-  * Content-Length handling
-
-* HTTP response serialization
-
-  * Status line generation
-  * Header generation
-  * Response body serialization
-
+* Request line parsing
+* Header parsing
+* Response serialization
+* Content-Length handling
 * Static file serving
 
-* Binary file and video streaming using incremental reads
+### Streaming
 
-* Proxy endpoints
+* Binary file streaming
+* Video streaming using incremental reads from disk
+* Proxy streaming from upstream HTTP servers
 
-  * Forwarding requests to httpbin.org
-  * Streaming upstream responses to clients
+### Transfer Encodings
 
 * Chunked Transfer Encoding
+* Incremental chunk generation
+* End-of-stream chunk handling
 
-  * Chunk generation
-  * Incremental response streaming
-  * End-of-stream chunk handling
+### HTTP Trailers
 
-* HTTP Trailers
+* Trailer header advertisement
+* Trailer serialization
+* SHA-256 response integrity trailer
+* Response length trailer
 
-  * Trailer header advertisement
-  * Trailer serialization
-  * SHA-256 response integrity trailer
-  * Response length trailer
+### Proxying
 
-* SHA-256 hashing of streamed response bodies
+* Upstream HTTP requests using cpp-httplib
+* Streaming responses from httpbin.org to connected clients
 
-* Concurrent request handling using worker threads
+### Concurrency
 
-## What I learned
+* Dedicated listener thread
+* Worker thread per client connection
 
-* TCP socket programming
-* HTTP/1.1 message formatting and parsing
-* Incremental and streaming I/O
-* Chunked transfer encoding and trailers
-* Binary data handling
-* Multithreaded request processing
-* Debugging protocol-level interoperability issues with clients and browsers
+## Project Structure
 
-## Acknowledgements
+```text
+.
+├── cmakelists.txt
+├── readme.md
+├── .gitignore
+│
+├── httpserver/
+│   └── server.cc
+│
+├── internal/
+│   ├── header/
+│   │   ├── headers.hpp
+│   │   └── headers.cc
+│   │
+│   ├── request/
+│   │   ├── request.hpp
+│   │   └── request.cc
+│   │
+│   ├── response/
+│   │   ├── response.hpp
+│   │   └── response.cc
+│   │
+│   └── server_services/
+│       ├── http_services.hpp
+│       └── http_services.cc
+│
+├── assets/
+│   └── vim.mp4
+│
+└── third_party/
+    └── httplib.h
+```
 
-* cpp-httplib (Yuji Hirose): Used as the HTTP client for communicating with httpbin.org and receiving streamed   upstream responses.
+## Build Requirements
 
-##
-Everything related to the server side of the project—including socket handling, request parsing, response generation, chunked transfer encoding, trailers, static file serving, and multithreaded request handling was implemented by me in this codebase.
+* C++20 compiler
+* CMake 3.16+
+* OpenSSL
 
+### Arch Linux
+
+```bash
+sudo pacman -S --needed base-devel cmake openssl
+```
+
+### Build
+
+```bash
+git clone <repo-url>
+cd CPP-Multithreaded-HTTP-Server
+
+cmake -B build
+cmake --build build
+
+./build/server
+```
+
+## Third-Party Libraries
+
+* cpp-httplib (MIT License) by Yuji Hirose
+
+  * https://github.com/yhirose/cpp-httplib
+
+Used as the HTTP client for upstream proxy requests and streamed responses.
+
+## References
+
+* RFC 9110 - HTTP Semantics
+* RFC 9112 - HTTP/1.1

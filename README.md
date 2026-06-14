@@ -48,18 +48,35 @@ The server uses a dedicated listener thread to accept incoming connections and s
 
 ```text
 .
-├── Http-Server/
+├── cmakelists.txt
+├── readme.md
+├── .gitignore
+│
+├── httpserver/
 │   └── server.cc
 │
 ├── internal/
-│   ├── Header/
-│   ├── Request/
-│   ├── Response/
-│   └── Server_services/
+│   ├── header/
+│   │   ├── headers.hpp
+│   │   └── headers.cc
+│   │
+│   ├── request/
+│   │   ├── request.hpp
+│   │   └── request.cc
+│   │
+│   ├── response/
+│   │   ├── response.hpp
+│   │   └── response.cc
+│   │
+│   └── server_services/
+│       ├── http_services.hpp
+│       └── http_services.cc
 │
-├── 3rd-party-library-used/
+├── assets/
+│   └── vim.mp4
 │
-└── README.md
+└── third_party/
+    └── httplib.h
 ```
 
 ## Build Requirements

@@ -53,3 +53,11 @@ The server uses a dedicated listener thread to accept incoming connections and s
 * Binary data handling
 * Multithreaded request processing
 * Debugging protocol-level interoperability issues with clients and browsers
+
+## Acknowledgements
+
+* cpp-httplib (Yuji Hirose): Used as the HTTP client for communicating with httpbin.org and receiving streamed   upstream responses.
+
+##
+Everything related to the server side of the project—including socket handling, request parsing, response generation, chunked transfer encoding, trailers, static file serving, and multithreaded request handling was implemented by me in this codebase.
+

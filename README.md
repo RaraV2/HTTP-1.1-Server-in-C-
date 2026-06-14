@@ -102,6 +102,100 @@ cmake --build build
 
 ./build/server
 ```
+## Configuration
+
+The listening port is currently configured in `httpserver/server.cc`.
+
+By default the server runs on:
+
+```text
+http://localhost:42069
+```
+
+To use a different port, modify the port value in `server.cc`, rebuild the project, and run the server again.
+
+Example:
+
+```cpp
+constexpr int PORT = 8080;
+```
+
+## Available Routes
+
+### GET /
+
+Health check endpoint.
+
+```bash
+curl http://localhost:42069/
+```
+
+Response:
+
+```text
+Server is running
+```
+
+---
+
+### GET /myproblem
+
+Returns a predefined response.
+
+```bash
+curl http://localhost:42069/myproblem
+```
+
+---
+
+### GET /yourproblem
+
+Returns a predefined response.
+
+```bash
+curl http://localhost:42069/yourproblem
+```
+
+---
+
+### GET /video
+
+Streams an MP4 video file to the client.
+
+```bash
+curl http://localhost:42069/video --output video.mp4
+```
+
+The response is streamed and can be played by any compatible media player after download.
+
+---
+
+### GET /httpbin/stream/100
+
+Proxies a streaming response from httpbin.org and forwards it to the client using HTTP chunked transfer encoding.
+
+```bash
+curl http://localhost:42069/httpbin/stream/100
+```
+
+This endpoint demonstrates:
+
+- Fetching data from another server
+- Streaming responses
+- Chunked transfer encoding
+- Sending data to the client as it arrives
+
+---
+
+## Example
+
+```bash
+curl http://localhost:42069/
+curl http://localhost:42069/myproblem
+curl http://localhost:42069/yourproblem
+curl http://localhost:42069/httpbin/stream/100
+curl http://localhost:42069/video --output video.mp4
+```
 
 ## Third-Party Libraries
 

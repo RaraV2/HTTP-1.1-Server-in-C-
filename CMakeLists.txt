@@ -13,7 +13,6 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 
 find_package(OpenSSL REQUIRED)
 
-# The executable definition matching your repository paths
 add_executable(server
     httpserver/server.cc
     internal/headers/headers.cc
@@ -22,7 +21,6 @@ add_executable(server
     internal/server_services/server_services.cc
 )
 
-# Corrected include paths to use 3rd-party-library
 target_include_directories(server PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}
     ${CMAKE_CURRENT_SOURCE_DIR}/3rd-party-library
